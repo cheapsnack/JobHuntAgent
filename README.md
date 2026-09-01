@@ -1,9 +1,6 @@
 # Job Hunt Agent
 
-A Claude Code agent that tailors your resume to every job description you
-apply to — without changing its look or format, and without inventing
-anything — plus an optional pipeline to track applications and approve
-them from your phone or a web dashboard.
+A Claude Code agent for job hunting: tailors a one-page resume to each job description, scores fit, scrapes postings from job boards, drafts recruiter emails, and tracks everything on a dashboard.
 
 Run it inside **Claude Code**. On first use the agent interviews you once
 to build a reusable "base template" from your real experience. After that,
