@@ -72,6 +72,8 @@ paste a job description and get a tailored, ATS-checked one-page PDF back.
 | `config/resume_rules.json` | Your name + fact/title rules for the QA gate | yes |
 | `candidate_profile/` | Your resume PDF + verified extra facts | yes |
 | `scripts/track.py` | Local SQLite application tracker | optional |
+| `scripts/scrape.py` | Pull jobs from Greenhouse/Lever/Ashby (no API key) | optional |
+| `scripts/score.py` | Store a fit/odds score + breakdown on a job | optional |
 | `scripts/sync_supabase.py` | Sync tracker <-> hosted dashboard | optional |
 | `scripts/telegram_setup.py` | Telegram digest of the review queue | optional |
 | `scripts/gmail_auth.py` | Create outreach email drafts (never sends) | optional |

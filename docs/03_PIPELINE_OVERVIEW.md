@@ -26,12 +26,42 @@ PENDING_REVIEW -> APPROVED | REJECTED -> EMAILED | APPLIED
 `REJECTED` = you passed. `EMPLOYER_REJECTED` = the company turned you
 down after you applied.
 
-## Scoring fields (optional)
+## Scraping jobs — `scripts/scrape.py`
 
-`fit_score`, `odds_score`, `strengths`, `weaknesses` are optional columns
-the dashboard shows if present. Have the agent score a JD against
-`CLAUDE.md`'s fit-check rubric and write them with `track.py`, or fill
-them yourself. There is no automatic scorer in this kit.
+Pulls postings from public Greenhouse / Lever / Ashby job boards. **No API
+key** — these are the same endpoints the company career pages use.
+
+```bash
+cp config/job_sources.example.json config/job_sources.json   # edit the watchlist + filters
+python scripts/scrape.py --dry-run       # preview matches
+python scripts/scrape.py                 # add new matches as PENDING_REVIEW
+```
+
+Edit `config/job_sources.json`: `title_keywords`, `location_keywords`, and
+the `boards` list (company + ats + token, where the token is the slug in
+`boards.greenhouse.io/TOKEN`, `jobs.lever.co/TOKEN` or
+`jobs.ashbyhq.com/TOKEN`).
+
+Most large Indian firms run their own ATS and are not reachable this way —
+paste those JDs to the agent directly, or write a poller that calls
+`python scripts/track.py add ...`.
+
+## Scoring — `scripts/score.py`
+
+The agent scores a JD against the six-dimension rubric in `CLAUDE.md`
+(that judgement needs an LLM). This script records the result so the
+dashboard can show it:
+
+```bash
+python scripts/score.py set 4 --fit 72 --odds 64 \
+  --breakdown "core 3 x.35, shape 3 x.20, domain 2 x.15, scope 3 x.15, tools 3 x.10, quals 3 x.05" \
+  --strengths "Owns data products end to end; SQL + migration experience" \
+  --weaknesses "No hands-on Kubernetes; wants 8+ yrs; observability is new"
+python scripts/score.py keywords 4 "kubernetes,terraform,sql,dbt"   # literal JD coverage
+```
+
+`fit_score`, `odds_score`, `strengths`, `weaknesses` are the columns the
+dashboard card shows.
 
 ## Telegram digest — `scripts/telegram_setup.py`
 
@@ -56,8 +86,9 @@ Three tabs — Review (Approve / Pass), To Apply (Mark applied), Pipeline
 (status table). Buttons write to Supabase; `pull` brings those decisions
 back to `data/jobs.db`.
 
-## Discovery (not included)
+## Going further
 
-Automated pulling from ATS job boards, career portals, and Google Jobs is
-**not** part of this kit. Add your own pollers that call `track.py add`,
-or paste JDs to the agent directly and let it log them.
+`scrape.py` covers Greenhouse / Lever / Ashby. For Google Jobs (SerpAPI,
+`docs/01` Step 3), Workday, or other career portals, add your own poller
+that ends by calling `python scripts/track.py add ...` — that is the one
+entry point everything else reads from.

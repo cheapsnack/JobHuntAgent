@@ -1,0 +1,24 @@
+{
+  "_comment": "Copy to config/job_sources.json. Used by scripts/scrape.py to pull postings from public ATS job boards. No API key needed - these are the same public endpoints the company career pages use.",
+
+  "title_keywords": [
+    "product manager",
+    "program manager",
+    "strategy",
+    "operations",
+    "business analyst"
+  ],
+  "_title_keywords_note": "A posting is kept only if its title contains one of these (case-insensitive). Keep them specific - a bare word like 'manager' matches hundreds of unrelated roles.",
+
+  "location_keywords": [],
+  "_location_keywords_note": "A posting is kept only if its location contains one of these (e.g. 'remote', 'bangalore', 'london'). Empty list [] = accept every location. Set this once you know where you want to work.",
+
+  "boards": [
+    { "company": "Anthropic", "ats": "greenhouse", "token": "anthropic" },
+    { "company": "Figma",     "ats": "greenhouse", "token": "figma" },
+    { "company": "Ramp",      "ats": "ashby",      "token": "ramp" },
+    { "company": "Notion",    "ats": "ashby",      "token": "notion" },
+    { "company": "Spotify",   "ats": "lever",      "token": "spotify" }
+  ],
+  "_boards_note": "Find a company's token from its careers URL: boards.greenhouse.io/TOKEN, jobs.lever.co/TOKEN, jobs.ashbyhq.com/TOKEN. Only companies that use Greenhouse, Lever or Ashby work here - many firms run their own ATS and are not reachable this way; paste those JDs to the agent directly."
+}

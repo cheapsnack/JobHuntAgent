@@ -95,9 +95,30 @@ specific gaps.
 - **Report misses plainly.** If a check shows an earlier statement was
   wrong, say so and correct the record.
 
+## Scoring a JD (when the tracker is in use)
+
+When a new job is logged, score it against the six-dimension rubric before
+the user reviews it. Rate each dimension 0-4, multiply by its weight, sum,
+then multiply by 25:
+
+  core skills 0.35, role shape 0.20, domain 0.15, scope 0.15, tools 0.10, quals 0.05
+
+- **Never score years-of-experience gaps.** Employers flex on level.
+- `fit_score` = how well the background matches the JD.
+- `odds_score` = fit after employer screening severity (big-name employers
+  screen harder). A fit-minus-odds gap of 10+ means "apply via referral",
+  not "skip".
+- Auto-skip below fit 50, auto-approve at fit 70+, else leave for review.
+
+Record it with `python scripts/score.py set <id> --fit N --odds N
+--breakdown "..." --strengths "..." --weaknesses "..."`. `strengths` and
+`weaknesses` are what the dashboard card shows, so make them concrete and
+specific to that posting.
+
 ## Optional job-tracking pipeline
 
 `docs/03_PIPELINE_OVERVIEW.md` describes an optional layer: a SQLite
-tracker, a Telegram digest, Gmail drafts, and a Supabase + Vercel approval
-dashboard. None of it is required to tailor resumes. Set it up only if the
-user asks.
+tracker (`track.py`), an ATS job scraper (`scrape.py`, no API key),
+scoring (`score.py`), a Telegram digest, Gmail drafts, and a Supabase +
+Vercel approval dashboard. None of it is required to tailor resumes. Set it
+up only if the user asks.
