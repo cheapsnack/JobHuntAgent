@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<!--
+  COVER LETTER TEMPLATE
+  ====================
+  Companion to templates/resume_base.html. Same typography, so a resume and a
+  cover letter read as one set when an employer opens both.
+
+  WHEN TO USE THIS AT ALL
+    Cover letters are NOT part of the default flow. Write one ONLY when the
+    posting or the application form actually asks for one, or when the user
+    asks by name. Never speculatively, never as part of a batch.
+
+  HOW TO USE
+    1. Copy this file to the scratchpad. Never edit this template in place.
+    2. Replace every {{PLACEHOLDER}} and the paragraphs between the
+       "CONTENT: body" markers. Leave the CSS alone.
+    3. Compile:
+         python scripts/compile_pdf.py <copy.html> cover_letters/<Name>_<Company>_CoverLetter.pdf
+    4. Read the PDF back. Confirm one page, and that it opens with the name.
+
+  Do NOT write a nested comment opener or closer inside this block.
+
+  CONTENT RULES
+    - One page, always.
+    - No em-dash or en-dash anywhere, same as the resume.
+    - Never claims a job title the candidate has never held.
+    - Never volunteer a gap. Write what the candidate brings. Gaps are for
+      interview answers and direct screening questions only.
+    - Every claim maps to a real bullet in candidate_profile/. Nothing invented.
+
+  STRUCTURE THAT WORKS, four paragraphs:
+    1. What they are applying for, who they are in one line, and the specific
+       thing in THEIR posting that made them write.
+    2. The strongest relevant story told as a decision, not a duty, with the
+       real number.
+    3. A second story from another employer, same shape.
+    4. What they bring in one sentence, then the location or availability
+       line, then the ask.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Cover Letter</title>
+<style>
+  @page { size: Letter; margin: 0.7in 0.85in; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: Calibri, Carlito, "Segoe UI", sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.35;
+    color: #000;
+    margin: 0;
+    text-align: left;
+    font-variant-ligatures: none;
+    font-feature-settings: "liga" 0, "clig" 0, "dlig" 0, "hlig" 0;
+  }
+  .name { font-size: 20pt; font-weight: 700; letter-spacing: 0.6pt; color: #1F4E79; margin: 0 0 2pt 0; }
+  .contact { font-size: 9.5pt; margin: 0 0 4pt 0; }
+  .rule { border-bottom: 1.1pt solid #1F4E79; margin: 0 0 14pt 0; }
+  .meta { margin: 0 0 12pt 0; } .meta div { margin: 0; }
+  .subject { font-weight: 700; margin: 0 0 12pt 0; }
+  p { margin: 0 0 10pt 0; }
+  .signoff { margin-top: 14pt; } .signoff div { margin: 0; }
+</style>
+</head>
+<body>
+
+<!-- CONTENT: header - this block never changes between letters -->
+<div class="name">JANE DOE</div>
+<div class="contact">+00 00000 00000&nbsp; |&nbsp; jane.doe@example.com&nbsp; |&nbsp; linkedin.com/in/janedoe</div>
+<div class="rule"></div>
+<!-- CONTENT: header ends -->
+
+<!-- CONTENT: addressee -->
+<div class="meta">
+  <div>{{DATE}}</div>
+  <div>&nbsp;</div>
+  <div>{{ADDRESSEE}}</div>
+  <div>{{COMPANY_AND_TEAM}}</div>
+  <div>{{CITY_COUNTRY}}</div>
+</div>
+<div class="subject">Re: {{ROLE_TITLE}}{{REQ_ID}}</div>
+<!-- CONTENT: addressee ends -->
+
+<!-- CONTENT: body -->
+<p>Dear {{SALUTATION}},</p>
+<p>{{PARA_1_WHY_WRITING}}</p>
+<p>{{PARA_2_STORY_ONE}}</p>
+<p>{{PARA_3_STORY_TWO}}</p>
+<p>{{PARA_4_WHAT_THEY_BRING_AND_ASK}}</p>
+<p>Thank you for considering my application. I would welcome the chance to discuss the role.</p>
+<!-- CONTENT: body ends -->
+
+<!-- CONTENT: signoff - this block never changes between letters -->
+<div class="signoff">
+  <div>Regards,</div>
+  <div>Jane Doe</div>
+</div>
+<!-- CONTENT: signoff ends -->
+
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Job Hunt Agent</title>
+<style>
+  :root{
+    --bg:#f6f3eb; --surface:#fff; --surface-2:#f1ece1;
+    --ink:#241f19; --ink-2:#635c4f; --ink-3:#9c9382; --line:#e7e0d0;
+    --brand:#d97757; --brand-2:#be5d3d; --brand-tint:#fceae0;
+    --good:#4b7b5c; --warn:#b0801f; --bad:#b4453b;
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-theme=light]){
+    --bg:#151310; --surface:#201c17; --surface-2:#2a251e;
+    --ink:#f4efe4; --ink-2:#b5ac9b; --ink-3:#7c7365; --line:#332d25;
+    --brand:#e8916f; --brand-2:#d97757; --brand-tint:#37251c;
+    --good:#7cb18c; --warn:#d6a945; --bad:#de7a6c;
+  }}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:ui-sans-serif,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:15px;line-height:1.5}
+  .wrap{max-width:900px;margin:0 auto;padding:0 18px 80px}
+  header{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+  .hd{max-width:900px;margin:0 auto;padding:16px 18px 0;display:flex;align-items:center;gap:12px}
+  .mark{width:34px;height:34px;border-radius:10px;background:var(--brand);color:#fff;
+    font-weight:800;display:grid;place-items:center}
+  h1{font-size:17px;margin:0}
+  nav{display:flex;gap:18px;max-width:900px;margin:12px auto 0;padding:0 18px;overflow-x:auto}
+  nav button{background:none;border:none;cursor:pointer;font:inherit;color:var(--ink-3);
+    font-weight:650;padding:10px 2px 12px;border-bottom:2px solid transparent}
+  nav button.on{color:var(--ink);border-bottom-color:var(--brand)}
+  .cnt{background:var(--surface-2);border-radius:99px;padding:1px 7px;font-size:11px;margin-left:5px}
+  .job{background:var(--surface);border:1px solid var(--line);border-radius:14px;
+    padding:16px 17px;margin-bottom:11px}
+  .jt{font-size:16px;font-weight:700}.jt .co{color:var(--brand-2)}
+  .jm{font-size:12.5px;color:var(--ink-3);margin-top:3px}
+  .sc{display:inline-block;font-weight:800;margin-left:8px}
+  .g{color:var(--good)}.w{color:var(--warn)}.b{color:var(--bad)}
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:12px;
+    padding-top:12px;border-top:1px solid var(--line)}
+  @media(max-width:560px){.split{grid-template-columns:1fr}}
+  .split h4{font-size:10px;text-transform:uppercase;letter-spacing:.07em;margin:0 0 5px}
+  .split ul{margin:0;padding-left:15px;font-size:13px;color:var(--ink-2)}
+  .acts{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;align-items:center}
+  .btn{border:1px solid transparent;border-radius:10px;padding:8px 15px;font:inherit;
+    font-weight:700;font-size:13px;cursor:pointer}
+  .b-ok{background:var(--good);color:#fff}.b-no{background:var(--surface-2);color:var(--ink-2)}
+  .b-go{background:var(--brand);color:#fff}
+  .lnk{color:var(--brand-2);font-weight:650;text-decoration:none;font-size:13px}
+  .gate{max-width:320px;margin:16vh auto;text-align:center}
+  .gate input{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:11px;
+    background:var(--surface);color:var(--ink);font:inherit;margin-bottom:10px}
+  .void{text-align:center;padding:50px;color:var(--ink-3)}
+  .dim{font-size:12.5px;color:var(--ink-3);font-style:italic}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--surface);
+    border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  th,td{text-align:left;padding:10px 13px;border-bottom:1px solid var(--line)}
+  tr:last-child td{border-bottom:none}
+  th{font-size:10.5px;text-transform:uppercase;color:var(--ink-3)}
+  .chip{font-size:11px;font-weight:700;padding:3px 8px;border-radius:99px;
+    background:var(--brand-tint);color:var(--brand-2)}
+</style>
+</head>
+<body>
+
+<div id="gate" class="gate" style="display:none">
+  <div class="mark" style="margin:0 auto 14px">J</div>
+  <h1 style="margin-bottom:12px">Job Hunt Agent</h1>
+  <input id="pw" type="password" placeholder="Passcode" onkeydown="if(event.key==='Enter')unlock()">
+  <button class="btn b-go" style="width:100%" onclick="unlock()">Unlock</button>
+  <div id="gerr" class="dim" style="margin-top:9px"></div>
+</div>
+
+<div id="app" style="display:none">
+  <header>
+    <div class="hd">
+      <div class="mark">J</div>
+      <h1>Job Hunt Agent</h1>
+      <button class="btn b-no" style="margin-left:auto" onclick="theme()">Theme</button>
+    </div>
+    <nav>
+      <button id="t-review" class="on" onclick="go('review')">Review<span class="cnt" id="c-review">·</span></button>
+      <button id="t-apply" onclick="go('apply')">To Apply<span class="cnt" id="c-apply">·</span></button>
+      <button id="t-pipe" onclick="go('pipe')">Pipeline<span class="cnt" id="c-pipe">·</span></button>
+    </nav>
+  </header>
+  <div class="wrap">
+    <section id="s-review"></section>
+    <section id="s-apply" style="display:none"></section>
+    <section id="s-pipe" style="display:none"></section>
+  </div>
+</div>
+
+<script>
+const PASS = new URLSearchParams(location.search).get("pass") || localStorage.getItem("jha_pass") || "";
+let D = {review:[], apply:[], pipe:[]};
+const esc = s => String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const score = j => j.fit_score ?? j.match_score ?? null;
+const cls = n => n==null?"":n>=70?"g":n>=55?"w":"b";
+const STAT = {PENDING_REVIEW:"To review",APPROVED:"Resume ready",REJECTED:"Passed",
+  EMAILED:"Applied",APPLIED:"Applied",INTERVIEWING:"Interviewing",OFFER:"Offer",
+  EMPLOYER_REJECTED:"Rejected",FAILED:"Failed"};
+function pts(raw){ if(!raw) return [];
+  try{const p=JSON.parse(raw); if(Array.isArray(p)) return p.filter(Boolean).map(String);}catch(e){}
+  return String(raw).split(/[;\n]+/).map(s=>s.trim()).filter(Boolean); }
+
+function theme(){ const n=document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark";
+  document.documentElement.setAttribute("data-theme",n); localStorage.setItem("jha_theme",n); }
+if(localStorage.getItem("jha_theme")) document.documentElement.setAttribute("data-theme",localStorage.getItem("jha_theme"));
+function unlock(){ const v=document.getElementById("pw").value.trim(); if(!v)return;
+  localStorage.setItem("jha_pass",v); location.search="?pass="+encodeURIComponent(v); }
+function go(n){ for(const k of ["review","apply","pipe"]){
+  document.getElementById("s-"+k).style.display=k===n?"":"none";
+  document.getElementById("t-"+k).classList.toggle("on",k===n); } }
+
+async function api(st){
+  const r=await fetch(`/api/jobs?pass=${encodeURIComponent(PASS)}&status=${st}`);
+  if(r.status===401) throw new Error("401");
+  return r.json();
+}
+function card(j,mode){
+  const s=score(j);
+  const up=pts(j.strengths), dn=pts(j.weaknesses).length?pts(j.weaknesses):pts(j.missing_keywords);
+  const body = (up.length||dn.length) ? `<div class="split">
+    <div><h4>Strengths</h4>${up.length?`<ul>${up.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:'<div class="dim">None noted</div>'}</div>
+    <div><h4>Watch outs</h4>${dn.length?`<ul>${dn.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:'<div class="dim">None noted</div>'}</div>
+  </div>` : "";
+  let acts="";
+  if(mode==="review") acts=`<div class="acts">
+    <button class="btn b-ok" data-id="${j.id}" data-a="approve">Approve</button>
+    <button class="btn b-no" data-id="${j.id}" data-a="reject">Pass</button>
+    ${j.url?`<a class="lnk" href="${esc(j.url)}" target="_blank" rel="noopener">Open posting</a>`:""}</div>`;
+  else if(mode==="apply") acts=`<div class="acts">
+    ${j.url?`<a class="lnk" href="${esc(j.url)}" target="_blank" rel="noopener">Apply</a>`:""}
+    ${j.resume_pdf_path?`<span class="dim">${esc(j.resume_pdf_path.split(/[\\/]/).pop())}</span>`:'<span class="dim">no resume attached</span>'}
+    <button class="btn b-go" data-id="${j.id}" data-a="applied">Mark applied</button></div>`;
+  return `<div class="job">
+    <div class="jt"><span class="co">${esc(j.company)}</span> · ${esc(j.role_title||"")}
+      ${s!=null?`<span class="sc ${cls(s)}">${s}</span>`:""}</div>
+    <div class="jm">${esc((j.location||"Location unspecified").split(",")[0])}</div>
+    ${body}${acts}</div>`;
+}
+function render(){
+  const r=document.getElementById("s-review");
+  r.innerHTML = D.review.length
+    ? D.review.slice().sort((a,b)=>(score(b)||0)-(score(a)||0)).map(j=>card(j,"review")).join("")
+    : `<div class="void">Nothing to review.</div>`;
+  const a=document.getElementById("s-apply");
+  a.innerHTML = `<div class="dim" style="margin:4px 0 12px">Approved and waiting on you.</div>` + (D.apply.length
+    ? D.apply.slice().sort((x,y)=>(score(y)||0)-(score(x)||0)).map(j=>card(j,"apply")).join("")
+    : `<div class="void">Nothing approved and waiting.</div>`);
+  const p=document.getElementById("s-pipe");
+  p.innerHTML = D.pipe.length ? `<table><tr><th>Company</th><th>Role</th><th>Applied</th><th>Status</th></tr>
+    ${D.pipe.map(j=>`<tr><td><b>${esc(j.company)}</b></td>
+      <td style="color:var(--ink-2)">${esc((j.role_title||"").slice(0,42))}</td>
+      <td style="color:var(--ink-3)">${esc((j.applied_on||"").slice(0,10)||"—")}</td>
+      <td><span class="chip">${esc(STAT[j.status]||j.status)}</span></td></tr>`).join("")}</table>`
+    : `<div class="void">No applications sent yet.</div>`;
+  for(const [k,v] of [["review",D.review.length],["apply",D.apply.length],["pipe",D.pipe.length]])
+    document.getElementById("c-"+k).textContent=v;
+}
+document.addEventListener("click", async e=>{
+  const b=e.target.closest("button.btn[data-id]"); if(!b) return;
+  b.parentElement.querySelectorAll("button.btn").forEach(x=>x.disabled=true);
+  const r=await fetch("/api/action",{method:"POST",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({id:Number(b.dataset.id),action:b.dataset.a,passcode:PASS})});
+  if(r.ok){ b.closest(".job").style.opacity=.4;
+    b.parentElement.innerHTML=`<span class="dim">${
+      {approve:"Approved",reject:"Passed",applied:"Marked applied"}[b.dataset.a]}</span>`; }
+  else { b.parentElement.querySelectorAll("button.btn").forEach(x=>x.disabled=false); alert("Failed - try again"); }
+});
+async function boot(){
+  if(!PASS){ document.getElementById("gate").style.display="block"; return; }
+  document.getElementById("app").style.display="block";
+  try{
+    const [a,b,c]=await Promise.all([api("PENDING_REVIEW"),api("APPROVED"),
+      api("APPLIED,EMAILED,INTERVIEWING,OFFER,EMPLOYER_REJECTED")]);
+    D={review:a,apply:b,pipe:c};
+  }catch(e){
+    document.getElementById("app").style.display="none";
+    document.getElementById("gate").style.display="block";
+    document.getElementById("gerr").textContent="Wrong passcode"; return;
+  }
+  render();
+}
+boot();
+</script>
+</body>
+</html>

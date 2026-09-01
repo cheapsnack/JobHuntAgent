@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<!--
+  CANONICAL RESUME TEMPLATE
+  ========================
+  Copy this file, replace ONLY the content between the "CONTENT:" marker
+  comments below, and compile with:
+      python scripts/compile_pdf.py <copy.html> resumes/<Name>_<Company>.pdf --fit
+  Then ALWAYS run:
+      python scripts/verify_resume.py resumes/<Name>_<Company>.pdf
+
+  Do NOT write a nested comment opener or closer inside this block. Doing so
+  ends the comment early and the rest of these notes render as visible text
+  at the top of the PDF.
+
+  The CSS below is LOCKED. It is calibrated for one dense page (Calibri,
+  ~9.8pt, roughly 620-700 words, 12-14 bullets). Changing font-family,
+  font-size, margins, or line-height is a regression - it causes either a
+  two-page spill or a thin-looking page. Let compile_pdf.py --fit do the
+  fitting; do not hand-tune type size here.
+
+  RULES ENFORCED BY scripts/verify_resume.py (config/resume_rules.json):
+    - exactly 1 page
+    - no em-dash or en-dash anywhere
+    - >= min_bullets, >= min_words
+    - required_facts present, banned_facts absent
+    - no banned_title_claims in the summary opener
+    - single-column, no tables, selectable text (ATS-safe)
+    - page starts with candidate_name
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Resume</title>
+<style>
+  @page { size: Letter; margin: 0.38in 0.52in; }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: Calibri, Carlito, "Segoe UI", sans-serif;
+    font-size: 9.8pt;
+    line-height: 1.17;
+    color: #000;
+    margin: 0;
+    text-align: left;
+    /* ATS parseability: stop Calibri/Carlito substituting fi/fl ligature
+       glyphs, which land in the PDF text layer as U+FB01/U+FB02 and make
+       words like "definition" / "workflow" invisible to a literal ATS
+       match. Changes no locked property. verify_resume.py fails on
+       ligatures so this cannot silently regress. */
+    font-variant-ligatures: none;
+    font-feature-settings: "liga" 0, "clig" 0, "dlig" 0, "hlig" 0;
+  }
+
+  .name {
+    font-size: 20pt;
+    font-weight: 700;
+    letter-spacing: 0.6pt;
+    color: #1F4E79;
+    text-align: center;
+    margin: 0 0 2pt 0;
+  }
+  .contact {
+    font-size: 9.5pt;
+    text-align: center;
+    margin: 0 0 8pt 0;
+  }
+  .contact a { color: #1F4E79; text-decoration: none; }
+
+  h2 {
+    font-size: 10.5pt;
+    font-weight: 700;
+    letter-spacing: 0.4pt;
+    color: #1F4E79;
+    text-transform: uppercase;
+    border-bottom: 0.9pt solid #1F4E79;
+    margin: 6pt 0 3pt 0;
+    padding-bottom: 1pt;
+  }
+
+  .summary { margin: 0 0 2pt 0; }
+
+  /* Role / education header rows. Flexbox, NOT a table - ATS parsers choke on tables. */
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 10pt;
+    margin: 4pt 0 1pt 0;
+  }
+  .row .left  { font-weight: 700; }
+  .row .right { font-weight: 700; white-space: nowrap; }
+  .row.sub .left  { font-weight: 400; font-style: italic; }
+  .row.sub .right { font-weight: 400; }
+  .row:first-of-type { margin-top: 1pt; }
+
+  ul { margin: 1pt 0 0 0; padding-left: 13pt; }
+  li { margin: 0 0 1pt 0; padding-left: 1pt; }
+
+  .skill { margin: 0 0 2pt 0; }
+  .skill b { font-weight: 700; }
+
+  h2, .row { break-after: avoid; page-break-after: avoid; }
+  li { break-inside: avoid; page-break-inside: avoid; }
+</style>
+</head>
+<body>
+
+<!-- CONTENT: header - replace with the candidate's real details. The name
+     must be the first visible text on the page. -->
+<div class="name">JANE DOE</div>
+<div class="contact">jane.doe@example.com &nbsp;|&nbsp; +00 00000 00000 &nbsp;|&nbsp; <a href="https://www.linkedin.com/in/janedoe">LinkedIn</a></div>
+
+<!-- CONTENT: summary - 3 to 4 lines, tailored to the JD.
+     NEVER open by claiming a job title the candidate has never held
+     (see config/resume_rules.json -> banned_title_claims).
+     build_resume.py replaces the text inside .summary. -->
+<h2>Summary</h2>
+<div class="summary">
+  Product-focused analyst with 5+ years turning discovery into shipped products across financial services and internal tooling. Owned an analytics platform used by 200 staff end to end, shipped a data catalogue adopted by 100 users, and defined the metrics leadership prioritized against. Strong in user research, data-driven prioritization, and agile delivery.
+</div>
+
+<!-- CONTENT: education - facts only. Edit by hand during onboarding. -->
+<h2>Education</h2>
+<div class="row">
+  <div class="left">University of Somewhere - MBA</div>
+  <div class="right">2021 - 2023</div>
+</div>
+<div class="row">
+  <div class="left">State Institute of Technology - B.Tech, Mechanical Engineering</div>
+  <div class="right">2013 - 2017</div>
+</div>
+
+<!-- CONTENT: work experience.
+     Assembled by scripts/build_resume.py from the bullet library and the
+     per-job spec. The block below is a placeholder; build_resume replaces it. -->
+<h2>Work Experience</h2>
+
+<div class="row">
+  <div class="left">Acme Corp - Senior Analyst, Product</div>
+  <div class="right">Jun'24 - Present</div>
+</div>
+<ul>
+  <li>Placeholder bullet. Run build_resume.py to generate the real work-experience section from your spec.</li>
+</ul>
+
+<!-- CONTENT: skills - reorder and re-label lines to mirror JD terminology.
+     Certifications stay as the last line. build_resume.py replaces this block. -->
+<h2>Skills &amp; Tools</h2>
+<div class="skill"><b>Product &amp; Strategy:</b> Product lifecycle, discovery &amp; user research, PRDs &amp; user stories, roadmap &amp; prioritization, KPIs/OKRs, Agile/Scrum</div>
+<div class="skill"><b>Data &amp; Analytics:</b> SQL, data modelling, ETL, product analytics, forecasting, financial modelling</div>
+<div class="skill"><b>Platforms &amp; Tools:</b> Jira, Confluence, Azure DevOps, Figma, Power BI, AWS, GCP, Azure</div>
+<div class="skill"><b>Domain:</b> Financial services, data platforms, internal tooling</div>
+<div class="skill"><b>Certifications:</b> Lean Six Sigma Green Belt (Issuing Body), Cloud Practitioner (2022), Scrum Product Owner (2023)</div>
+
+</body>
+</html>

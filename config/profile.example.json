@@ -1,0 +1,65 @@
+{
+  "_comment": "Copy to config/profile.json and fill in. Nothing here is used to fabricate resume content - it drives job matching, tailoring context, and outreach only.",
+
+  "contact": {
+    "name": "YOUR FULL NAME",
+    "email": "you@example.com",
+    "phone": "+00 00000 00000",
+    "linkedin_url": "https://www.linkedin.com/in/your-handle/"
+  },
+
+  "target_titles": [
+    "Product Manager",
+    "Program Manager",
+    "Strategy and Operations",
+    "Business Analyst"
+  ],
+  "_target_titles_note": "The roles you actually want. Keep entries specific - a bare word like 'Manager' matches hundreds of irrelevant postings.",
+
+  "current_location": "Your City",
+  "locations": ["Your City", "Second City", "Remote"],
+  "location_priority": ["Second City", "Your City", "Remote", "International"],
+  "will_relocate": true,
+  "_locations_note": "locations = acceptable. location_priority = order to surface them in. Anything not listed is outside preference.",
+
+  "min_salary": null,
+  "current_ctc": null,
+  "expected_ctc": null,
+  "earliest_join_date": null,
+  "_salary_note": "Fill during onboarding. State them only where an employer actually asks - volunteering a number early anchors a negotiation before there is an offer.",
+
+  "years_experience": 0,
+  "domains": ["Domain one", "Domain two"],
+
+  "resume": {
+    "base_resume_pdf": "candidate_profile/your_base_resume.pdf",
+    "verified_facts": "candidate_profile/verified_facts.md",
+    "keyword_learnings": "candidate_profile/keyword_learnings.md"
+  },
+
+  "fit_check": {
+    "skip_threshold_pct": 50,
+    "exclude_years_of_experience_gap": true
+  },
+
+  "outreach": {
+    "_note": "Optional. Only used by the pipeline for Gmail drafts. The agent drafts, you send.",
+    "subject_format": "<CompanyName>_<JobTitle>",
+    "bcc_email": "",
+    "sending_policy": "draft_only_never_send"
+  },
+
+  "messaging": {
+    "_note": "Optional. Fill only if you set up the Telegram bot - see docs/01_SETUP_API_KEYS.md.",
+    "channel": "telegram",
+    "bot_token": "",
+    "chat_id": ""
+  },
+
+  "discovery": {
+    "_note": "Optional. Only used by the pipeline.",
+    "location_filter_enabled": true,
+    "title_exclude_keywords": [],
+    "serpapi": { "key_file": "config/serpapi_key.txt", "enabled": false }
+  }
+}

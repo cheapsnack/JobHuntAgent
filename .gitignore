@@ -1,0 +1,44 @@
+# ---- personal data: never commit ----
+config/*.json
+!config/*.example.json
+config/*.txt
+config/*token*
+config/*secret*
+config/*_key*
+
+candidate_profile/*
+!candidate_profile/README.md
+!candidate_profile/*.example.md
+
+data/
+resumes/
+cover_letters/
+interview_prep/
+JDs/
+scratchpad/
+drafts/
+
+# ---- credentials ----
+*client_secret*.json
+*token*.json
+serpapi_key.txt
+supabase_token.txt
+supabase_project.json
+vercel_token.txt
+.env
+
+# ---- python ----
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# ---- os / editor ----
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# ---- node (dashboard deploy) ----
+node_modules/
+.vercel

@@ -1,0 +1,36 @@
+{
+  "_comment": "Copy to config/resume_rules.json. Drives scripts/verify_resume.py. Set during onboarding.",
+
+  "candidate_name": "JANE",
+  "_candidate_name_note": "First word(s) the compiled PDF must start with - the QA gate checks the name is the first thing on the page. Case-insensitive. Replace 'JANE' with your own name during onboarding. Use enough of the name to be unambiguous.",
+
+  "min_bullets": 12,
+  "min_words": 600,
+  "max_words": 750,
+  "_density_note": "Calibrated for the shipped template (Calibri, ~9.8pt). Below ~600 words the page reads visibly thin. Do not lower these to make a thin resume pass - add a real bullet instead.",
+
+  "required_facts": [
+    "Lean Six Sigma Green Belt \\(Issuing Body\\)"
+  ],
+  "_required_facts_note": "Regexes for text that MUST appear in every resume - typically a certification with its correct issuer. Replace the example with your own, or leave empty [].",
+
+  "banned_facts": [
+    "Some Wrong Issuer"
+  ],
+  "_banned_facts_note": "Regexes for WRONG facts that must never appear - e.g. a certification you once had misattributed on a draft. Leave empty [] if none.",
+
+  "banned_title_claims": [
+    "^\\s*(Senior |Principal |Staff |Lead )?Product Manager\\b",
+    "^\\s*(Senior |Principal |Staff |Lead )?Product Owner\\b"
+  ],
+  "_banned_title_claims_note": "Regexes tested against the FIRST sentence of the summary. List any job title you have never actually held so the summary cannot claim it. Leave empty [] if you are fine claiming your target titles.",
+
+  "banned_phrases": [
+    "successfully",
+    "results-driven",
+    "proven track record",
+    "think outside the box",
+    "wear many hats",
+    "dynamic self-starter"
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "_comment": "Copy to config/supabase_project.json and fill from Supabase -> Project Settings -> API. Git-ignored because service_role is a secret that bypasses row-level security.",
+  "project_ref": "your-project-ref",
+  "anon_key": "PUBLIC_ANON_KEY_HERE",
+  "service_role": "SECRET_SERVICE_ROLE_KEY_HERE"
+}
