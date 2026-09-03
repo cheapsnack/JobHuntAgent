@@ -23,8 +23,24 @@ paste a job description and get a tailored, ATS-checked one-page PDF back.
 - A **one-page PDF compiler** with auto-fit (`scripts/compile_pdf.py`).
 - An **onboarding interview** (`ONBOARDING.md`) the agent runs to set this
   up from your existing resume, then asks about salary, roles and locations.
-- **API-key setup guides** (`docs/01_SETUP_API_KEYS.md`) for the optional
-  Telegram digest, Gmail drafts, and a Supabase + Vercel approval dashboard.
+- A **fit-check rubric** the agent scores each JD against before tailoring,
+  recorded on the job with `scripts/score.py` (fit vs. odds, plus a
+  re-derivable breakdown).
+
+### Optional pipeline (no keys needed to start)
+
+- A **job scraper** (`scripts/scrape.py`) that pulls postings from public
+  Greenhouse / Lever / Ashby boards, filtered by your title and location
+  keywords. **No API key.**
+- A **local tracker** (`scripts/track.py`, SQLite) that every other piece
+  reads from and writes to.
+- **Gmail draft** creation for recruiter outreach (`scripts/gmail_auth.py`)
+  — drafts only, it never sends.
+- A **Telegram digest** of your review queue (`scripts/telegram_setup.py`).
+- A **web approval dashboard** (`dashboard_app/`, Supabase + Vercel) —
+  Approve / Pass / Mark-applied from your phone, synced back to the tracker.
+- **Setup guides** for every key, one step at a time
+  (`docs/01_SETUP_API_KEYS.md`).
 
 ---
 
@@ -50,6 +66,14 @@ paste a job description and get a tailored, ATS-checked one-page PDF back.
    roles and preferred locations.
 4. After onboarding, paste any job description and say **"tailor my resume
    for this."**
+5. (Optional) Turn on tracking and discovery:
+   ```bash
+   python scripts/track.py init
+   cp config/job_sources.example.json config/job_sources.json   # edit companies + keywords
+   python scripts/scrape.py --dry-run
+   ```
+   See `docs/03_PIPELINE_OVERVIEW.md`, then `docs/01_SETUP_API_KEYS.md` for
+   Telegram / Gmail / the dashboard.
 
 ---
 
@@ -70,6 +94,7 @@ paste a job description and get a tailored, ATS-checked one-page PDF back.
 | `candidate_profile/` | Your resume PDF + verified extra facts | yes |
 | `scripts/track.py` | Local SQLite application tracker | optional |
 | `scripts/scrape.py` | Pull jobs from Greenhouse/Lever/Ashby (no API key) | optional |
+| `config/job_sources.json` | Watchlist + title/location filters for the scraper | optional |
 | `scripts/score.py` | Store a fit/odds score + breakdown on a job | optional |
 | `scripts/sync_supabase.py` | Sync tracker <-> hosted dashboard | optional |
 | `scripts/telegram_setup.py` | Telegram digest of the review queue | optional |
