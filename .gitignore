@@ -18,6 +18,9 @@ JDs/
 scratchpad/
 drafts/
 
+# ---- publish-to-github skill: per-project scrub list, never commit ----
+.publish.local.json
+
 # ---- credentials ----
 *client_secret*.json
 *token*.json
