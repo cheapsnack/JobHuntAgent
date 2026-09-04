@@ -122,3 +122,13 @@ tracker (`track.py`), an ATS job scraper (`scrape.py`, no API key),
 scoring (`score.py`), a Telegram digest, Gmail drafts, and a Supabase +
 Vercel approval dashboard. None of it is required to tailor resumes. Set it
 up only if the user asks.
+
+## Optional interview-prep reports
+
+When the user has an interview lined up, `docs/04_INTERVIEW_PREP_GUIDE.md`
+describes how to build a company-researched, candidate-accurate prep report
+and compile it to a PDF in `interview_prep/` (git-ignored). Same honesty
+standard as the resumes: real facts only, every claim carries a confidence
+badge, gaps acknowledged for the user's own preparation and never scripted
+into an outbound pitch. Trigger it when the user says "interview prep",
+names a company they are interviewing with, or shares a prep doc to redo.

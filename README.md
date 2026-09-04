@@ -42,6 +42,15 @@ paste a job description and get a tailored, ATS-checked one-page PDF back.
 - **Setup guides** for every key, one step at a time
   (`docs/01_SETUP_API_KEYS.md`).
 
+### Optional interview prep
+
+- An **interview-prep report generator** (`docs/04_INTERVIEW_PREP_GUIDE.md`):
+  when you have an interview booked, the agent researches the company,
+  rebuilds every candidate claim from your real profile, and compiles a
+  thorough prep PDF - resume walkthrough, STAR stories, domain frameworks,
+  a company and competitor deep dive, likely questions with answer frames,
+  and a strategic teardown. Every fact carries a confidence badge.
+
 ---
 
 ## Quick start
@@ -103,6 +112,7 @@ paste a job description and get a tailored, ATS-checked one-page PDF back.
 | `docs/01_SETUP_API_KEYS.md` | Telegram, Gmail, SerpAPI, Supabase, Vercel | optional |
 | `docs/02_BASE_RESUME_GUIDE.md` | Manual version of onboarding | reference |
 | `docs/03_PIPELINE_OVERVIEW.md` | The optional tracking pipeline | optional |
+| `docs/04_INTERVIEW_PREP_GUIDE.md` | The optional interview-prep report generator | optional |
 
 ---
 
