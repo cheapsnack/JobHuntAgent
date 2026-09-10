@@ -1,0 +1,17 @@
+# Companies that appear in your REAL pipeline.
+#
+# Copy this file to real_employers.txt (gitignored) and list, one per line,
+# the employers you are actually applying to - especially the one you are
+# about to show this demo to.
+#
+# If any of them turns up in the demo database, the guard fails and the
+# demo scripts refuse to run. This is a second net behind the containment
+# check; it catches the case where you seeded the demo from real data.
+#
+# Matching is case-insensitive and on whole words, so "Acme" catches
+# "Acme Corp" and "ACME Industries" but a short name like "EY" does not
+# fire on "Greystone".
+
+# ExampleCorp
+# Initech
+# Globex
