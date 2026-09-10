@@ -1,10 +1,63 @@
 # Job Hunt Agent
 
-A Claude Code agent for job hunting: tailors a one-page resume to each job description, scores fit, scrapes postings from job boards, drafts recruiter emails, and tracks everything on a dashboard.
+An agentic job-search system built in Claude Code, where the rules the
+agent must follow are **checks in code, not sentences in a prompt**. It
+tailors a one-page resume to each job description, scores fit on an
+auditable rubric, scrapes postings, drafts recruiter emails (never sends
+them), and tracks every application through to an outcome on a dashboard.
 
 Run it inside **Claude Code**. On first use the agent interviews you once
 to build a reusable "base template" from your real experience. After that,
 paste a job description and get a tailored, ATS-checked one-page PDF back.
+
+## Why it is built this way
+
+Most "AI resume" tools optimise for generating text. This one optimises for
+**not shipping a mistake**, because a fabricated bullet or a two-page resume
+sent to a real employer cannot be recalled. The design rules that follow
+came from real failures during the author's own eight-week run, each turned
+into a mechanical check the moment it happened. The full list is in
+[`docs/05_DESIGN_DECISIONS.md`](docs/05_DESIGN_DECISIONS.md).
+
+- **Guardrails as code.** A resume is "done" only when `verify_resume.py`
+  passes: one page, no dashes, enough real content, no unheld title claim,
+  ATS-parseable, no ligature glyphs. The agent cannot mark work finished by
+  saying so.
+- **Provenance over trust.** Every bullet in a built resume must trace to a
+  phrase that literally appears in the candidate's source files. The builder
+  refuses to compile otherwise. "Never invent a bullet" is a check, not a
+  rule to remember.
+- **Two scores, never blended.** `fit` measures how well the background
+  matches the JD; `odds` measures the chance of clearing that employer's
+  screen. A wide gap means "apply via referral", not "skip".
+- **Score what you actually read.** Scored on a stub JD, roles looked
+  *better* than on the full posting (the less the agent knew, the higher it
+  scored). Fit is now capped by how much JD text existed at scoring time,
+  and the cap lifts automatically when the real posting is recovered.
+- **Human in the loop where it matters.** The agent drafts emails; the user
+  sends. The agent builds resumes; the user approves from a phone. Nothing
+  outbound happens without a person pressing the button.
+- **Measured on outcomes, not activity.** The scoreboard's North Star is
+  interviews per ten applications, with cohorts by score band, employer tier
+  and channel, and a validation test that refuses to draw a conclusion
+  under 25 resolved applications.
+
+## What it produced
+
+From the author's own run (eight weeks, one candidate, India and Gulf
+product and strategy roles). These are real numbers, including the modest
+ones; the honest reading is that the system is strong evidence of
+disciplined AI-product operation and thin evidence, so far, that tailoring
+beats a good base resume. That experiment is still running.
+
+| Measure | Value |
+|---|---|
+| Postings logged / scored | 2,100+ / 1,300+ |
+| Tailored resumes built, all passing the QA gate | 280+ |
+| Applications sent | 159 |
+| Reached an interview | 9 (0.6 per 10 sent) |
+| Score validation | 65+ odds band replied at 22.8% vs 15.4% below it (n=79 / 13) |
+| Guardrails added after a real incident | 7 |
 
 ---
 
@@ -113,6 +166,8 @@ paste a job description and get a tailored, ATS-checked one-page PDF back.
 | `docs/02_BASE_RESUME_GUIDE.md` | Manual version of onboarding | reference |
 | `docs/03_PIPELINE_OVERVIEW.md` | The optional tracking pipeline | optional |
 | `docs/04_INTERVIEW_PREP_GUIDE.md` | The optional interview-prep report generator | optional |
+| `docs/05_DESIGN_DECISIONS.md` | The incidents behind each guardrail, and what was measured | reference |
+| `demo/` | A seeded, fictional demo instance for screenshots and walkthroughs | reference |
 
 ---
 
